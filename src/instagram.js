@@ -137,7 +137,7 @@ class Instagram {
   }
 
   async _startScrapeUser (userId) {
-    console.log('Scrapping page ' + this.pageCount);
+    console.log('Scrapping page ' + this.pageCount++);
 
     try {
       const response = await this._fetchPaginationQuery(userId);

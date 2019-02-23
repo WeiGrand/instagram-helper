@@ -16,7 +16,7 @@ $ cd instagram-helper
   $ npm run login
   ```
   
-  > You can fill your username/password in `account.json` to avoid tying each time.
+  > You can fill your username/password in `account.json` to avoid typing each time.
 
 - Scrape all the medias(photo/video) form user's homepage
 
