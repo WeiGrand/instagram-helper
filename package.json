@@ -1,0 +1,19 @@
+{
+  "name": "instagram-helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "login": "TASK=LOGIN node tasks",
+    "scrape-user": "TASK=SCRAPE_USER node tasks"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crawler": "^1.2.0",
+    "prompts": "^2.0.3",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}
