@@ -6,7 +6,7 @@ const Instagram = require('./instagram');
 const Cookie = require('./cookie');
 
 const instagram = new Instagram({
-  Cookie
+  Cookie,
 });
 
 module.exports = instagram;

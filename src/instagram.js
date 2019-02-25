@@ -21,12 +21,13 @@ const { md5 } = require('./signature');
 
 class Instagram {
   constructor (props) {
-    const { Cookie } = props;
+    const { Cookie, interval } = props;
 
     this.cookie = new Cookie();
     this.pageInitialData = {};
     this.pagePaginationInfo = {};
     this.pageCount = 1;
+    this.interval = interval || 3;
   }
 
   async initialize () {
@@ -177,7 +178,6 @@ class Instagram {
 
           if (medias && medias.length) {
             for (let j = 0; j < medias.length; j++) {
-              // this.totalScrapeUserWork++;
 
               const { node } = medias[j];
               const { display_url, is_video, video_url, id } = node;
@@ -191,8 +191,6 @@ class Instagram {
 
                 const req = request.get(url);
 
-                const self = this;
-
                 req.on('response', (response) => {
                   if (response.statusCode !== 200) return;
 
@@ -200,7 +198,6 @@ class Instagram {
                 });
 
                 file.on('finish', () => {
-                  // self.currentScrapeUserWork++;
 
                   file.close();
 
@@ -214,19 +211,20 @@ class Instagram {
 
               try {
                 await writeFilePromise;
-                console.log('Waiting 5 second to start next fetch otherwise Instagram will limit the request rate...');
-                await this.wait(5);
+                console.log('Waiting ' + this.interval + ' seconds to start next fetch otherwise Instagram will limit the request rate...');
+                await this.wait(this.interval);
               } catch (e) {
-                console.log(e);
-
-                return;
+                throw e;
               }
             }
           }
         } catch (e) {
-          console.log(e);
-
-          return;
+          if (/socket hang up/.test(e.message)) { // 重试 可以大大提高成功率
+            console.log(e);
+            i--;
+          } else {
+            throw e;
+          }
         }
       }
 
